@@ -1,0 +1,827 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>むらまつり たいこどうじょう</title>
+<style>
+/* ── ファイル単体で開いたときに必要な最低限のリセット ──
+   （hidden が効かないと、すべての画面が重なって表示されてしまう） ── */
+[hidden]{display:none!important}
+img{max-width:100%}
+/* ── 和紙の地に朱と藍。教室のプロジェクタでも読める明度に振った単一テーマ ── */
+:root{
+  color-scheme:light;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --washi:#FAF6EE;
+  --washi2:#F2EADB;
+  --washi3:#E9DEC9;
+  --sumi:#211B17;
+  --sumi60:#6F6156;
+  --keibo:#DCCFB8;
+  --shu:#B5271F;
+  --shu-lt:#E0796F;
+  --ai:#1C5A9E;
+  --ai-lt:#6FA3D6;
+  --matsu:#2E7D4F;
+  --kin:#C08A2E;
+  --ki:#6B3B2A;
+  --kawa:#F3E8D2;
+
+  --jp:"UD デジタル 教科書体 N-B","UD Digi Kyokasho N-B","BIZ UDPGothic","Meiryo","Hiragino Sans",sans-serif;
+  --jpr:"UD デジタル 教科書体 N-R","UD Digi Kyokasho N-R","BIZ UDPGothic","Meiryo","Hiragino Sans",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:var(--washi);color:var(--sumi);
+  font-family:var(--jpr);
+  -webkit-font-smoothing:antialiased;
+  overscroll-behavior:none;
+}
+button{font-family:var(--jp);color:inherit;cursor:pointer}
+:focus-visible{outline:4px solid var(--ai);outline-offset:3px}
+
+#app{height:100%;display:flex;flex-direction:column;padding:0 16px;max-width:1100px;margin:0 auto}
+
+/* ── ヘッダー ── */
+.bar{display:flex;align-items:center;gap:10px;padding-block:12px 8px;flex:0 0 auto}
+.bar h1{font-family:var(--jp);font-size:clamp(15px,2.4vw,24px);margin:0;letter-spacing:.02em;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .sp{flex:1}
+.ghost{
+  border:2px solid var(--keibo);background:var(--washi2);border-radius:12px;
+  padding:9px 16px;font-size:clamp(15px,1.8vw,18px);line-height:1;
+}
+.ghost:hover{background:var(--washi3)}
+
+main{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;padding-bottom:16px}
+
+/* ── メニュー ── */
+#menu{display:flex;flex-direction:column;gap:16px;overflow-y:auto;flex:1;justify-content:center;justify-content:safe center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:14px}
+.card{
+  display:flex;flex-direction:column;justify-content:center;gap:8px;text-align:left;
+  border:2px solid var(--keibo);border-left:10px solid var(--shu);
+  background:var(--washi2);border-radius:14px;padding:clamp(18px,3vh,30px) 20px;
+}
+.card:hover{background:#fff}
+.card.ai{border-left-color:var(--ai)}
+.card.mt{border-left-color:var(--matsu)}
+.card.kin{border-left-color:var(--kin);background:#FBF3E2}
+.card .no{font-family:var(--jp);font-size:clamp(20px,2.6vw,26px);line-height:1.25}
+.card .sub{font-family:var(--jpr);font-size:clamp(14px,1.7vw,17px);color:var(--sumi60)}
+.card .pat{font-family:var(--jp);font-size:clamp(16px,1.9vw,20px);letter-spacing:.04em;color:var(--shu)}
+.card.ai .pat{color:var(--ai)}
+
+.ytrow{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  border:2px dashed var(--keibo);border-radius:14px;padding:12px 16px;
+}
+.ytrow a{
+  display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:#fff;
+  background:#B5271F;border-radius:10px;padding:10px 16px;
+  font-family:var(--jp);font-size:clamp(15px,1.8vw,18px);
+}
+.ytrow a:hover{background:#921E17}
+.ytrow .play{
+  width:0;height:0;border-left:13px solid #fff;
+  border-top:8px solid transparent;border-bottom:8px solid transparent;
+}
+.ytrow span{font-size:clamp(13px,1.6vw,15px);color:var(--sumi60)}
+.note{font-size:13px;color:var(--sumi60);line-height:1.7}
+
+/* ── 練習画面 ── */
+#play{flex:1;display:flex;flex-direction:column;min-height:0}
+.ttl{font-family:var(--jp);font-size:clamp(20px,2.8vw,30px);margin:0}
+.inst{font-family:var(--jpr);font-size:clamp(15px,2vw,20px);color:var(--ai);margin:2px 0 0}
+
+.stage{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(8px,2vh,20px);position:relative}
+
+.beats{display:flex;gap:clamp(10px,3vw,40px);align-items:flex-end}
+.beat{display:flex;flex-direction:column;align-items:center;gap:clamp(4px,1.2vh,10px);width:clamp(58px,12vw,122px)}
+.kuchi{font-family:var(--jp);font-size:clamp(20px,3.4vw,40px);line-height:1;white-space:nowrap;transition:transform .09s}
+.dotrow{display:flex;gap:clamp(5px,1.1vw,11px);justify-content:center;align-items:center}
+.dot{
+  width:clamp(34px,6.6vw,66px);aspect-ratio:1;border-radius:50%;
+  border:3px solid #A9997F;background:transparent;transition:transform .09s,box-shadow .09s;
+}
+.dotrow.two .dot{width:clamp(24px,4.6vw,46px);border-width:3px}
+.kuchi.long{font-size:clamp(15px,2.5vw,29px)}
+.dot.on{background:var(--shu);border-color:var(--shu)}
+.beat.shime .dot{border-color:#8C9BAB}
+.beat.shime .dot.on{background:var(--ai);border-color:var(--ai)}
+.beat.now .dot{transform:scale(1.22);box-shadow:0 0 0 8px rgba(181,39,31,.16)}
+.beat.shime.now .dot{box-shadow:0 0 0 8px rgba(28,90,158,.16)}
+.beat.now .kuchi{transform:translateY(-3px) scale(1.1)}
+
+/* 太鼓 */
+.drumwrap{display:flex;flex-direction:column;align-items:center;gap:clamp(22px,3vh,30px);margin-top:clamp(14px,2.2vh,22px)}
+.drum{
+  width:clamp(150px,30vh,260px);aspect-ratio:1;border-radius:50%;border:none;padding:0;
+  background:
+    radial-gradient(circle at 38% 32%, #FBF4E4 0%, var(--kawa) 46%, #DFCDAE 100%);
+  box-shadow:0 0 0 clamp(9px,1.6vh,14px) var(--shu), 0 0 0 calc(clamp(9px,1.6vh,14px) + 7px) var(--ki), 0 8px 18px rgba(33,27,23,.22);
+  touch-action:manipulation;user-select:none;-webkit-user-select:none;
+  position:relative;transition:transform .07s;
+}
+.drum.shime{
+  box-shadow:0 0 0 clamp(9px,1.6vh,14px) var(--ai), 0 0 0 calc(clamp(9px,1.6vh,14px) + 7px) #2A3340, 0 8px 18px rgba(33,27,23,.22);
+}
+.drum::after{ /* 鋲 */
+  content:"";position:absolute;inset:4%;border-radius:50%;
+  background:repeating-conic-gradient(from 0deg,#B9A784 0 1.6deg,transparent 1.6deg 15deg);
+  -webkit-mask:radial-gradient(circle,transparent 90%,#000 91%);
+  mask:radial-gradient(circle,transparent 90%,#000 91%);
+  pointer-events:none;
+}
+.drum:active,.drum.hit{transform:scale(.955)}
+.drumlabel{font-family:var(--jp);font-size:clamp(14px,1.8vw,17px);color:var(--sumi60)}
+
+/* 合図・判定 */
+.count{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--jp);font-size:clamp(90px,22vh,190px);color:var(--shu);
+  pointer-events:none;
+}
+.judge{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:var(--jp);font-size:clamp(26px,5vw,48px);pointer-events:none;
+  opacity:0;transition:opacity .12s;white-space:nowrap;
+  text-shadow:0 0 12px rgba(250,246,238,.98),0 0 24px rgba(250,246,238,.92),0 0 4px rgba(250,246,238,1);
+}
+.judge.good{color:var(--matsu)}
+.judge.near{color:var(--kin)}
+.judge.show{opacity:1}
+
+.tip{font-family:var(--jp);font-size:clamp(15px,2vw,22px);color:var(--matsu);text-align:center;line-height:1.5}
+
+/* ── コントロール ── */
+.ctrl{flex:0 0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;padding-block:10px 0;border-top:2px solid var(--keibo)}
+.seg{display:flex;border:2px solid var(--keibo);border-radius:12px;overflow:hidden;background:var(--washi2)}
+.seg button{border:0;background:transparent;padding:10px 14px;font-size:clamp(14px,1.7vw,17px);line-height:1}
+.seg button[aria-pressed="true"]{background:var(--ai);color:#fff}
+.seg.tempo button[aria-pressed="true"]{background:var(--sumi);color:#fff}
+.lbl{font-size:clamp(13px,1.6vw,15px);color:var(--sumi60)}
+.go{
+  border:0;border-radius:14px;background:var(--matsu);color:#fff;
+  padding:14px 30px;font-size:clamp(17px,2.2vw,22px);line-height:1;
+}
+.go:hover{background:#26663F}
+.go.stop{background:var(--sumi)}
+.bars{font-family:var(--jp);font-size:clamp(14px,1.8vw,18px);color:var(--sumi60);font-variant-numeric:tabular-nums;min-width:6.5em;text-align:center}
+.hprog{display:flex;align-items:center;gap:10px;margin-top:8px}
+.hprog .bar2{flex:1;height:10px;border-radius:5px;background:var(--washi3);overflow:hidden}
+.hprog .bar2 span{display:block;height:100%;width:0;background:var(--kin)}
+.hprog .tt{font-variant-numeric:tabular-nums;font-size:14px;color:var(--sumi60);min-width:8.5em;text-align:right}
+.align{border:2px solid var(--kin);background:#FBF3E2;color:var(--ki);border-radius:12px;padding:10px 16px;font-size:clamp(14px,1.7vw,17px);line-height:1}
+.align:hover{background:#F6E9CE}
+.align.fine{border-color:var(--matsu);background:#EAF3EC;color:#20512F}
+.align.fine:hover{background:#DDEBE1}
+.bpm{display:flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums}
+.bpm b{font-family:var(--jp);font-size:clamp(15px,1.9vw,19px);min-width:4.6em;text-align:center}
+.bpm button{border:2px solid var(--keibo);background:var(--washi2);border-radius:9px;width:34px;height:34px;font-size:18px;line-height:1;padding:0}
+.bpm .rst{margin-left:4px;color:var(--sumi60);font-size:17px}
+
+/* ── 結果 ── */
+.sheet{
+  position:fixed;inset:0;background:rgba(33,27,23,.55);
+  display:flex;align-items:center;justify-content:center;padding:16px;z-index:9;
+}
+.sheet .inner{
+  background:var(--washi);border-radius:20px;padding:26px 24px;max-width:460px;width:100%;
+  display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;
+  border:3px solid var(--keibo);
+}
+.sheet h2{font-family:var(--jp);font-size:clamp(24px,4vw,32px);margin:0}
+.stars{font-size:clamp(34px,7vw,52px);color:var(--kin);letter-spacing:.1em;line-height:1}
+.score{font-family:var(--jp);font-size:clamp(18px,2.6vw,24px);font-variant-numeric:tabular-nums}
+.got{font-family:var(--jp);font-size:clamp(16px,2.2vw,20px);color:var(--matsu)}
+.sheet .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:4px}
+
+/* ══ スマホ：たて ══ */
+@media (max-width:520px){
+  .bar{gap:8px;padding-block:9px 4px}
+  .bar h1{font-size:15px}
+  .ghost{padding:8px 11px;font-size:13px}
+  .card{padding:16px}
+  .card .no{font-size:18px}
+  .card .sub{font-size:13px}
+  .card .pat{font-size:15px}
+  .note{font-size:12px}
+  .ttl{font-size:19px}
+  .inst{font-size:13px}
+  .stage{gap:6px}
+  .beats{gap:8px;width:100%;justify-content:center}
+  .beat{width:auto;flex:1 1 0;min-width:0;max-width:78px;gap:5px}
+  .kuchi{font-size:20px}
+  .dot{width:min(11vw,40px);border-width:2px}
+  .dotrow{gap:4px}
+  .dotrow.two .dot{width:min(7.4vw,27px)}
+  .kuchi.long{font-size:14px}
+  .drum{width:min(46vw,160px)}
+  .drumwrap{gap:10px;margin-top:6px}
+  .drumlabel{font-size:12px}
+  .tip{font-size:13px}
+  .ctrl{gap:7px;padding-block:8px 0}
+  .seg button{padding:8px 10px;font-size:13px}
+  .go{padding:12px 22px;font-size:16px}
+  .lbl{font-size:12px}
+  .bars{font-size:13px;min-width:0}
+  .align{padding:9px 14px;font-size:14px}
+  .align .hint{display:none}
+  .hprog .tt{font-size:12px;min-width:7em}
+  .sheet .inner{padding:20px 18px}
+}
+
+/* ══ スマホ：よこ（せがひくい画面）── 譜面を左、太鼓を右に ══ */
+@media (max-height:540px){
+  .bar{padding-block:6px 2px}
+  .ttl{font-size:clamp(15px,4.4vh,21px)}
+  .inst{font-size:clamp(11px,3vh,14px)}
+  .hprog{margin-top:4px}
+  .hprog .tt{font-size:12px}
+  .stage{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    grid-template-areas:"beats drum" "tip drum";
+    align-content:center;align-items:center;justify-items:center;
+    column-gap:clamp(12px,3vw,34px);row-gap:6px;
+    padding-inline:20px;
+  }
+  #beats{grid-area:beats;width:100%}
+  #dw{grid-area:drum;margin-top:0}
+  #tip{grid-area:tip}
+  .beat{width:auto;flex:1 1 0;min-width:0;max-width:86px;gap:4px}
+  .kuchi{font-size:clamp(16px,4.8vh,26px)}
+  .dot{width:clamp(20px,6.6vh,36px);border-width:2px}
+  .dotrow{gap:4px}
+  .dotrow.two .dot{width:clamp(13px,4.4vh,24px)}
+  .kuchi.long{font-size:clamp(11px,3.3vh,18px)}
+  .drum{width:min(30vh,140px)}
+  .drumwrap{gap:6px}
+  .drumlabel{font-size:11px}
+  .tip{font-size:clamp(11px,3.2vh,15px)}
+  .count{font-size:clamp(46px,17vh,90px)}
+  .judge{font-size:clamp(20px,6.5vh,34px)}
+  .ctrl{gap:6px;padding-block:6px 0}
+  .seg button{padding:6px 9px;font-size:12px}
+  .go{padding:9px 18px;font-size:15px}
+  .lbl{font-size:11px}
+  .bars{font-size:12px;min-width:0}
+  .align{padding:6px 10px;font-size:12px}
+  .bpm button{width:30px;height:30px}
+  .bpm b{font-size:15px}
+}
+
+/* ── レベル表 ── */
+#level{overflow-y:auto;display:flex;flex-direction:column;gap:10px}
+.lv{
+  display:flex;align-items:center;gap:14px;width:100%;text-align:left;
+  border:2px solid var(--keibo);background:var(--washi2);border-radius:12px;padding:13px 16px;
+  font-family:var(--jp);font-size:clamp(16px,2.1vw,21px);color:var(--matsu);
+}
+.lv .box{
+  flex:0 0 auto;width:34px;height:34px;border:3px solid var(--ai);border-radius:7px;
+  display:flex;align-items:center;justify-content:center;color:var(--ai);font-size:26px;line-height:1;
+}
+.lv[aria-pressed="true"]{background:#EAF3EC;border-color:var(--matsu)}
+.lv .t{flex:1}
+</style>
+
+<div id="app">
+  <div class="bar">
+    <button class="ghost" id="back" hidden>← メニュー</button>
+    <h1 id="hd">むらまつり たいこどうじょう</h1>
+    <div class="sp"></div>
+    <button class="ghost" id="tolv">れべるひょう</button>
+  </div>
+
+  <main>
+    <!-- ══ メニュー ══ -->
+    <section id="menu">
+      <div class="grid">
+        <button class="card" data-lesson="l1">
+          <span class="no">れんしゅう ①</span>
+          <span class="sub">ながどうだいこ（きほん）</span>
+          <span class="pat">ドン ・ ドン ・</span>
+        </button>
+        <button class="card" data-lesson="l2">
+          <span class="no">れんしゅう ②</span>
+          <span class="sub">ながどうだいこ（むらまつりの リズム）</span>
+          <span class="pat">ドンドン ・ ドン ・</span>
+        </button>
+        <button class="card ai" data-lesson="l3">
+          <span class="no">れんしゅう ③</span>
+          <span class="sub">しめだいこ</span>
+          <span class="pat">カッ カッ カッ カッ</span>
+        </button>
+        <button class="card ai" data-lesson="l4">
+          <span class="no">れんしゅう ④</span>
+          <span class="sub">しめだいこ（むらまつりの リズム）</span>
+          <span class="pat">・ カカ ・ ・</span>
+        </button>
+        <button class="card mt" data-lesson="song">
+          <span class="no">とおして うとう</span>
+          <span class="sub">1ばんを さいしょから さいごまで（4だん）</span>
+          <span class="pat" style="color:var(--matsu)">だんごとに リズムが かわる</span>
+        </button>
+      </div>
+
+      <div class="ytrow">
+        <a href="https://www.youtube.com/watch?v=68mtSUAEJFk" target="_blank" rel="noopener">
+          <span class="play" aria-hidden="true"></span>おてほんの どうがを みる
+        </a>
+        <span>「村祭り」（大きな字幕・文部省唱歌）／ YouTube が ひらきます</span>
+      </div>
+
+      <p class="note">
+        先生へ：音はボタンを押した時点で鳴り始めます（ブラウザの仕様で、最初の1タップまで音は出ません）。<br>
+        「たたく」モードはメトロノームだけが鳴り、児童のタップを判定します。「みる」モードはお手本の太鼓が鳴るので、実物の太鼓を叩く日に譜面台として使えます。<br>
+        「とおして うとう」は、9月の担当者が作った譜面どおり、1ばん全16小節を4段に分けて流します。段ごとにリズムが変わり、おやすみの段（ながどうだいこの2段目・しめだいこの1段目）はマルが白くなります。画面下に「何段目・歌詞」が出ます。<b>相手のパートの太鼓は小さい音で鳴ります</b>（聞き分けながら打つ練習のため）。<br>
+        テンポは <b>ゆっくり</b> と <b>ほんばん</b>（本物の演奏と同じ速さ）の2つです。まず「ゆっくり」で形をつかみ、できたら「ほんばん」にしてください。<br>
+        れべるひょうのチェックはこのタブレットに保存されます。共有端末では前の児童のチェックが残るので、右上「れべるひょう」の中の「ぜんぶ けす」でリセットしてください。
+      </p>
+    </section>
+
+    <!-- ══ 練習 ══ -->
+    <section id="play" hidden>
+      <div>
+        <h2 class="ttl" id="pt">リズムを うとう ①</h2>
+        <p class="inst" id="pi">ながどうだいこ（きほん）</p>
+      </div>
+
+      <div class="stage">
+        <div class="beats" id="beats"></div>
+        <div class="drumwrap" id="dw">
+          <button class="drum" id="drum" aria-label="たいこを たたく"></button>
+          <span class="drumlabel" id="dl">がめんを たたこう</span>
+        </div>
+        <p class="tip" id="tip"></p>
+        <div class="count" id="cnt" hidden></div>
+        <div class="judge" id="jd"></div>
+      </div>
+
+      <div class="ctrl">
+        <span class="lbl">やりかた</span>
+        <div class="seg" id="mode">
+          <button data-m="play" aria-pressed="true">たたく</button>
+          <button data-m="look" aria-pressed="false">みる</button>
+        </div>
+        <span class="lbl" id="tlbl">テンポ</span>
+        <div class="seg tempo" id="tempo">
+          <button data-t="60" aria-pressed="true">ゆっくり</button>
+          <button data-t="82" aria-pressed="false">ほんばん</button>
+        </div>
+        <span class="bars" id="bars">4かい うちます</span>
+        <button class="go" id="go">はじめる</button>
+      </div>
+    </section>
+
+    <!-- ══ レベル表 ══ -->
+    <section id="level" hidden></section>
+  </main>
+</div>
+
+
+<div class="sheet" id="sheet" hidden>
+  <div class="inner">
+    <h2 id="sh">よく できました！</h2>
+    <div class="stars" id="st">★★★</div>
+    <div class="score" id="sc"></div>
+    <div class="got" id="sg"></div>
+    <div class="row">
+      <button class="go" id="again">もういちど</button>
+      <button class="ghost" id="tomenu">メニューへ</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ═══ データ ═══ */
+/* 1小節＝4拍。hits は「何拍目に打つか」（0起点・小数可）。
+   dots は各拍のマル（1=うつ / 0=やすむ）。ドンドンは1拍に2つ。 */
+var PAT = {
+  nagado_kihon:{kuchi:["ドン","・","ドン","・"],
+                dots:[[1],[0],[1],[0]],       hits:[0,2]},
+  nagado_mura: {kuchi:["ドンドン","・","ドン","・"],
+                dots:[[1,1],[0],[1],[0]],     hits:[0,0.5,2]},
+  shime:       {kuchi:["カッ","カッ","カッ","カッ"],
+                dots:[[1],[1],[1],[1]],       hits:[0,1,2,3]},
+  shime_mura:  {kuchi:["・","カカ","・","・"],
+                dots:[[0],[1,1],[0],[0]],     hits:[1,1.5]}
+};
+
+/* 判定のきびしさ。good/near は「1拍の何割までをセーフとするか」、
+   gcap/ncap は秒での上限。数字を小さくするほど きびしくなる。 */
+var JUDGE = { good:0.20, gcap:0.22, near:0.36, ncap:0.40,
+              pass:0.85, star3:0.95, star2:0.80 };
+var FUE = [1,3];   /* うたの「ヒャララ」＝２はくめ と ４はくめ */
+
+/* ═══ 「村まつり」1ばん 全16小節（2拍子）═══
+   先生の譜面（ながどうだいこ／しめだいこ）をそのまま写したもの。
+   ここでは 2小節＝4拍 を 1ブロックとして、8ブロックで1ばんになる。 */
+var R = {};
+R.don2   = {kuchi:["ドン","・","ドン","・"],      dots:[[1],[0],[1],[0]],   hits:[0,2]};
+R.dondon = {kuchi:["ドンドン","・","ドン","・"],  dots:[[1,1],[0],[1],[0]], hits:[0,0.5,2]};
+R.yasumi = {kuchi:["・","・","・","・"],          dots:[[0],[0],[0],[0]],   hits:[]};
+R.katsu4 = {kuchi:["カッ","カッ","カッ","カッ"],  dots:[[1],[1],[1],[1]],   hits:[0,1,2,3]};
+R.katsu3 = {kuchi:["カッ","カッ","カッ","・"],    dots:[[1],[1],[1],[0]],   hits:[0,1,2]};
+R.hyarara= PAT.shime_mura;
+
+var SONG = {
+  nagado:[R.don2, R.don2,        /* 1だん　むらの ちんじゅの かみさまの */
+          R.yasumi, R.yasumi,    /* 2だん　きょうは めでたい おまつりび（おやすみ）*/
+          R.dondon, R.dondon,    /* 3だん　ドンドン ヒャララ ドン ヒャララ */
+          R.don2, R.don2],       /* 4だん　あさから きこえる ふえたいこ */
+  shime: [R.yasumi, R.yasumi,
+          R.katsu4, R.katsu3,
+          R.hyarara, R.hyarara,
+          R.katsu4, R.katsu3]
+};
+var WORDS = ["むらの ちんじゅの","かみさまの",
+             "きょうは めでたい","おまつりび",
+             "ドンドン ヒャララ ドン ヒャララ","ドンドン ヒャララ ドン ヒャララ",
+             "あさから きこえる","ふえたいこ"];
+var DAN   = [1,1,2,2,3,3,4,4];
+var CYCLE = SONG.nagado.length * 4;   /* 32はく ＝ 1ばん */
+
+var LESSONS = {
+  l1:{ttl:"リズムを うとう ①",inst:"ながどうだいこ（きほん）",drum:"nagado",pk:"nagado_kihon",
+      tip:"★ ４つ かぞえながら　１ぱくめと ３ぱくめを うとう",lv:2},
+  l2:{ttl:"リズムを うとう ②",inst:"ながどうだいこ（むらまつりの リズム）",drum:"nagado",pk:"nagado_mura",
+      tip:"★ 「ドンドン」を すばやく ２かい　すこし やすんで 「ドン」",lv:3},
+  l3:{ttl:"リズムを うとう ③",inst:"しめだいこ（きほん）",drum:"shime",pk:"shime",
+      tip:"★ かるく　たかい おとで　４つ そろえて うとう",lv:4},
+  l4:{ttl:"リズムを うとう ④",inst:"しめだいこ（むらまつりの リズム）",drum:"shime",pk:"shime_mura",
+      tip:"★ はじめは やすみ　「ヒャララ」の ところで カカ と はやく ２かい",lv:5},
+  song:{ttl:"とおして うとう",inst:"「村まつり」1ばん　ぜんぶで 4だん",drum:"nagado",pk:"nagado_kihon",
+      tip:"★ だんごとに リズムが かわるよ　おやすみの ところは じっと まとう",lv:7,song:true}
+};
+
+var LEVELS = [
+  "れべる１：ばちを ただしく もてた！",
+  "れべる２：ドン ・ ドン ・ が うてた！",
+  "れべる３：ドンドン ・ ドン が うてた！",
+  "れべる４：カッ カッ カッ カッ が うてた！",
+  "れべる５：やすみ ・ カッカッ が うてた！",
+  "れべる６：ともだちと そろって うてた！",
+  "れべる７：さいごまで とまらずに うてた！"
+];
+var NLV=LEVELS.length;
+var KEY="muramatsuri-levels-v2";
+var done=[false,false,false,false,false,false,false];
+try{var raw=localStorage.getItem(KEY); if(raw){var a=JSON.parse(raw); if(a&&a.length===NLV) done=a;}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(done));}catch(e){}}
+
+/* ═══ 音 ═══ */
+var ac=null,master=null,nbuf=null,nodes=[];
+function A(){
+  if(!ac){
+    var C=window.AudioContext||window.webkitAudioContext;
+    ac=new C(); master=ac.createGain(); master.gain.value=0.85; master.connect(ac.destination);
+  }
+  if(ac.state==="suspended"){ ac.resume(); }
+  return ac;
+}
+function keep(n){ nodes.push(n); if(nodes.length>400) nodes.splice(0,200); return n; }
+function silence(){
+  for(var i=0;i<nodes.length;i++){ try{ nodes[i].stop(0); }catch(e){} }
+  nodes.length=0;
+}
+function nz(){
+  if(!nbuf){
+    var n=Math.floor(ac.sampleRate*0.4);
+    nbuf=ac.createBuffer(1,n,ac.sampleRate);
+    var d=nbuf.getChannelData(0);
+    for(var i=0;i<n;i++) d[i]=Math.random()*2-1;
+  }
+  return nbuf;
+}
+function don(t,v){
+  v=v||1;
+  var o=ac.createOscillator(),g=ac.createGain();
+  o.type="sine";
+  o.frequency.setValueAtTime(155,t);
+  o.frequency.exponentialRampToValueAtTime(46,t+0.19);
+  g.gain.setValueAtTime(0.0001,t);
+  g.gain.exponentialRampToValueAtTime(0.85*v,t+0.006);
+  g.gain.exponentialRampToValueAtTime(0.0001,t+0.55);
+  o.connect(g); g.connect(master); o.start(t); o.stop(t+0.6); keep(o);
+  var s=ac.createBufferSource(); s.buffer=nz();
+  var f=ac.createBiquadFilter(); f.type="lowpass"; f.frequency.value=950;
+  var ng=ac.createGain();
+  ng.gain.setValueAtTime(0.45*v,t);
+  ng.gain.exponentialRampToValueAtTime(0.0001,t+0.09);
+  s.connect(f); f.connect(ng); ng.connect(master); s.start(t); s.stop(t+0.11); keep(s);
+}
+function katsu(t,v){
+  v=v||1;
+  var s=ac.createBufferSource(); s.buffer=nz();
+  var f=ac.createBiquadFilter(); f.type="bandpass"; f.frequency.value=1950; f.Q.value=1.3;
+  var g=ac.createGain();
+  g.gain.setValueAtTime(0.62*v,t);
+  g.gain.exponentialRampToValueAtTime(0.0001,t+0.13);
+  s.connect(f); f.connect(g); g.connect(master); s.start(t); s.stop(t+0.15); keep(s);
+  var o=ac.createOscillator(),og=ac.createGain();
+  o.type="triangle";
+  o.frequency.setValueAtTime(640,t);
+  o.frequency.exponentialRampToValueAtTime(430,t+0.06);
+  og.gain.setValueAtTime(0.3*v,t);
+  og.gain.exponentialRampToValueAtTime(0.0001,t+0.1);
+  o.connect(og); og.connect(master); o.start(t); o.stop(t+0.12); keep(o);
+}
+function click(t,acc){
+  var o=ac.createOscillator(),g=ac.createGain();
+  o.type="square"; o.frequency.value=acc?1500:1050;
+  g.gain.setValueAtTime(0.0001,t);
+  g.gain.exponentialRampToValueAtTime(acc?0.22:0.12,t+0.002);
+  g.gain.exponentialRampToValueAtTime(0.0001,t+0.05);
+  o.connect(g); g.connect(master); o.start(t); o.stop(t+0.06); keep(o);
+}
+function fue(t){
+  var o=ac.createOscillator(),g=ac.createGain();
+  o.type="triangle";
+  o.frequency.setValueAtTime(880,t);
+  o.frequency.setValueAtTime(988,t+0.11);
+  o.frequency.setValueAtTime(784,t+0.22);
+  g.gain.setValueAtTime(0.0001,t);
+  g.gain.exponentialRampToValueAtTime(0.18,t+0.03);
+  g.gain.setValueAtTime(0.18,t+0.3);
+  g.gain.exponentialRampToValueAtTime(0.0001,t+0.42);
+  o.connect(g); g.connect(master); o.start(t); o.stop(t+0.45); keep(o);
+}
+function voice(kind,t,v){ if(kind==="shime") katsu(t,v); else don(t,v); }
+
+/* ═══ 状態 ═══ */
+var $=function(id){return document.getElementById(id);};
+var cur=null, mode="play", tempo=60, part="nagado";
+var running=false, raf=0, frIdx=0, songMode=false;
+var S={};
+var BARS=4;
+
+/* ═══ 画面切替 ═══ */
+function show(which){
+  $("menu").hidden = which!=="menu";
+  $("play").hidden = which!=="play";
+  $("level").hidden = which!=="level";
+  $("back").hidden = which==="menu";
+  $("tolv").hidden = which==="level";
+  $("hd").textContent = which==="level" ? "れべるひょう" : "むらまつり たいこどうじょう";
+}
+
+/* ═══ 練習画面の組み立て ═══ */
+function openLesson(key){
+  cur=LESSONS[key]; cur.key=key;
+  $("pt").textContent=cur.ttl;
+  $("pi").textContent=cur.inst;
+  $("pi").className = "inst" + (cur.drum==="shime"?" shu":"");
+  $("tip").textContent=cur.tip;
+  songMode = !!cur.song;
+  frIdx = 0;
+  drawBeats();
+  applyMode();
+  $("go").textContent="はじめる";
+  show("play");
+  if(songMode) sayFrame();
+  else $("bars").textContent="4かい うちます";
+}
+function twoParts(){ return cur.key==="song"; }
+function partKey(){ return part==="shime" ? "shime" : "nagado"; }
+function otherKey(){ return part==="shime" ? "nagado" : "shime"; }
+function myFrames(){ return SONG[partKey()]; }
+function otherFrames(){ return SONG[otherKey()]; }
+function P(){ return songMode ? myFrames()[frIdx] : PAT[cur.pk]; }
+function sayFrame(){
+  if(!songMode) return;
+  $("bars").textContent = DAN[frIdx]+"だんめ　"+WORDS[frIdx];
+}
+function setFrame(i){
+  i=((i%8)+8)%8;
+  if(i===frIdx) return false;
+  frIdx=i; drawBeats(); sayFrame(); return true;
+}
+function drumKind(){
+  if(!twoParts()) return cur.drum;
+  return part;
+}
+function drawBeats(){
+  var w=$("beats"); w.innerHTML="";
+  var p=P(), sh=drumKind()==="shime";
+  for(var i=0;i<4;i++){
+    var b=document.createElement("div");
+    b.className="beat"+(sh?" shime":"");
+    var row=p.dots[i], html="";
+    for(var k=0;k<row.length;k++) html+='<span class="dot'+(row[k]?" on":"")+'"></span>';
+    b.innerHTML='<div class="kuchi'+(p.kuchi[i].length>=4?' long':'')+'">'+p.kuchi[i]+'</div>'+
+                '<div class="dotrow'+(row.length>1?" two":"")+'">'+html+'</div>';
+    w.appendChild(b);
+  }
+  $("drum").className="drum"+(sh?" shime":"");
+}
+function applyMode(){
+  $("dw").hidden = false;
+  $("dl").textContent = mode==="play" ? "がめんを たたこう" : "おてほんが なります（じっさいの たいこを たたこう）";
+}
+
+/* ═══ 演奏 ═══ */
+function start(){
+  A();
+  var bd=60/tempo, t0=ac.currentTime+0.4, p0=t0+4*bd;
+  var kind=drumKind();
+  var okind = (part==="shime") ? "nagado" : "shime";
+  var blocks = songMode ? myFrames().length : BARS;
+  if(songMode){ frIdx=0; drawBeats(); sayFrame(); }
+  var p = songMode ? null : P();
+  S={bd:bd,t0:t0,p0:p0,hits:[],good:0,near:0,extra:0,total:0,lastBeat:-99};
+  for(var i=0;i<4;i++) click(t0+i*bd, i===0);
+  for(var b=0;b<blocks;b++){
+    var base=p0+b*4*bd, j, h;
+    var f = songMode ? myFrames()[b] : p;
+    for(j=0;j<4;j++) click(base+j*bd, j===0);
+    for(h=0;h<f.hits.length;h++){
+      var t=base+f.hits[h]*bd;
+      S.total++;
+      S.hits.push({t:t,used:false});
+      if(mode==="look") voice(kind,t,1);
+    }
+    if(songMode){
+      /* あいての パートの たいこだけを 小さく鳴らす（笛は鳴らさない） */
+      var of=otherFrames()[b];
+      for(h=0;h<of.hits.length;h++) voice(okind, base+of.hits[h]*bd, 0.45);
+    }
+  }
+  S.end=p0+blocks*4*bd+bd*0.7;
+  running=true;
+  $("go").textContent="とめる"; $("go").classList.add("stop");
+  $("cnt").hidden=false;
+  loop();
+}
+function stop(){
+  running=false; cancelAnimationFrame(raf);
+  silence();
+  $("go").textContent="はじめる"; $("go").classList.remove("stop");
+  $("cnt").hidden=true;
+  var n=document.querySelectorAll(".beat.now");
+  for(var i=0;i<n.length;i++) n[i].classList.remove("now");
+}
+function loop(){
+  if(!running) return;
+  var now=ac.currentTime;
+  if(now>=S.end){ finish(); return; }
+  var beats=$("beats").children;
+  if(now < S.p0){
+    var n=Math.floor((now-S.t0)/S.bd)+1;
+    $("cnt").hidden=false;
+    $("cnt").textContent = n>0 && n<=4 ? String(n) : "";
+    $("bars").textContent="よーい…";
+  }else{
+    $("cnt").hidden=true;
+    var k=Math.floor((now-S.p0)/S.bd);
+    var bar=Math.floor(k/4)+1, idx=k%4;
+    if(k!==S.lastBeat){
+      S.lastBeat=k;
+      if(songMode){ setFrame(Math.min(bar-1, myFrames().length-1)); sayFrame(); beats=$("beats").children; }
+      for(var i=0;i<4;i++) beats[i].classList.toggle("now", i===idx);
+      if(!songMode) $("bars").textContent=bar+" / 4 かいめ";
+    }
+  }
+  raf=requestAnimationFrame(loop);
+}
+function flash(txt,cls){
+  var j=$("jd");
+  j.textContent=txt; j.className="judge "+cls+" show";
+  clearTimeout(flash.tid);
+  flash.tid=setTimeout(function(){ j.classList.remove("show"); },420);
+}
+function hitDrum(){
+  A();
+  var d=$("drum");
+  d.classList.add("hit"); setTimeout(function(){ d.classList.remove("hit"); },80);
+  var now=ac.currentTime;
+  voice(drumKind(), now+0.001, 1);
+  if(!running || mode!=="play") return;
+  if(now < S.p0 - S.bd*0.55) return;
+  var best=null, bd=1e9;
+  for(var i=0;i<S.hits.length;i++){
+    var h=S.hits[i]; if(h.used) continue;
+    var df=Math.abs(h.t-now);
+    if(df<bd){ bd=df; best=h; }
+  }
+  if(!best){ S.extra++; flash("よけいかも","near"); return; }
+  var wg=Math.min(JUDGE.gcap, S.bd*JUDGE.good), wn=Math.min(JUDGE.ncap, S.bd*JUDGE.near);
+  if(bd<=wg){ best.used=true; S.good++; flash("ばっちり","good"); }
+  else if(bd<=wn){ best.used=true; S.near++; flash("おしい","near"); }
+  else { S.extra++; flash(now<best.t ? "はやい" : "おそい","near"); }
+}
+function finish(){
+  running=false; cancelAnimationFrame(raf);
+  $("go").textContent="はじめる"; $("go").classList.remove("stop");
+  $("cnt").hidden=true;
+  var beats=$("beats").children;
+  for(var i=0;i<4;i++) beats[i].classList.remove("now");
+  var got=null;
+  if(mode==="play" && S.total>0){
+    var rate=(S.good + S.near*0.5)/(S.total + S.extra);
+    $("st").textContent = rate>=JUDGE.star3 ? "★★★" : rate>=JUDGE.star2 ? "★★" : "★";
+    $("sh").textContent = rate>=JUDGE.star3 ? "ばっちり！" : rate>=JUDGE.star2 ? "よく できました！" : "がんばったね！";
+    $("sc").textContent = "ばっちり "+S.good+"かい ／ ぜんぶで "+S.total+"かい"
+                        + (S.extra ? "　（よけいに うった "+S.extra+"かい）" : "");
+    if(rate>=JUDGE.pass && cur.lv){ got=cur.lv; }
+  }else{
+    $("st").textContent="♪";
+    $("sh").textContent="さいごまで きけました！";
+    $("sc").textContent = songMode ? "1ばんを さいごまで ながしました" : "おてほんを "+BARS+"かい ながしました";
+  }
+  if(got){ done[got-1]=true; save(); $("sg").textContent="れべる"+got+" たっせい！"; }
+  else $("sg").textContent="";
+  nodes.length=0;
+  $("sheet").hidden=false;
+}
+
+/* ═══ レベル表 ═══ */
+function drawLevels(){
+  var w=$("level"); w.innerHTML="";
+  for(var i=0;i<NLV;i++){
+    (function(i){
+      var b=document.createElement("button");
+      b.className="lv"; b.setAttribute("aria-pressed", done[i]?"true":"false");
+      b.innerHTML='<span class="box">'+(done[i]?"✓":"")+'</span><span class="t">'+LEVELS[i]+'</span>';
+      b.addEventListener("click",function(){
+        done[i]=!done[i]; save(); drawLevels();
+      });
+      w.appendChild(b);
+    })(i);
+  }
+  var r=document.createElement("button");
+  r.className="ghost"; r.textContent="ぜんぶ けす";
+  r.style.alignSelf="flex-start"; r.style.marginTop="6px";
+  r.addEventListener("click",function(){
+    done=[]; for(var q=0;q<NLV;q++) done.push(false); save(); drawLevels();
+  });
+  w.appendChild(r);
+  var p=document.createElement("p");
+  p.className="note";
+  p.textContent="れべる１と６は、せんせいと いっしょに かくにんして、じぶんで ✓ を つけよう。";
+  w.appendChild(p);
+}
+
+/* ═══ イベント ═══ */
+var cards=document.querySelectorAll("[data-lesson]");
+for(var i=0;i<cards.length;i++){
+  (function(el){
+    el.addEventListener("click",function(){ A(); openLesson(el.getAttribute("data-lesson")); });
+  })(cards[i]);
+}
+$("back").addEventListener("click",function(){ stop(); show("menu"); });
+$("tolv").addEventListener("click",function(){ stop(); drawLevels(); show("level"); });
+$("go").addEventListener("click",function(){
+  if(running) stop(); else start();
+});
+$("drum").addEventListener("pointerdown",function(e){ e.preventDefault(); this.focus(); hitDrum(); });
+$("drum").addEventListener("keydown",function(e){
+  if(e.key===" "||e.key==="Enter"){ e.preventDefault(); if(!e.repeat) hitDrum(); }
+});
+$("drum").addEventListener("click",function(e){ e.preventDefault(); });
+$("again").addEventListener("click",function(){ $("sheet").hidden=true; start(); });
+$("tomenu").addEventListener("click",function(){ $("sheet").hidden=true; show("menu"); });
+
+$("mode").addEventListener("click",function(e){
+  var b=e.target.closest("button"); if(!b) return;
+  stop(); mode=b.getAttribute("data-m");
+  var bs=this.querySelectorAll("button");
+  for(var i=0;i<bs.length;i++) bs[i].setAttribute("aria-pressed", bs[i]===b?"true":"false");
+  applyMode();
+});
+$("tempo").addEventListener("click",function(e){
+  var b=e.target.closest("button"); if(!b) return;
+  stop(); tempo=parseInt(b.getAttribute("data-t"),10);
+  var bs=this.querySelectorAll("button");
+  for(var i=0;i<bs.length;i++) bs[i].setAttribute("aria-pressed", bs[i]===b?"true":"false");
+});
+
+/* あわせてみよう用のパート切替を、練習画面のコントロールに差し込む */
+var pw=document.createElement("div");
+pw.style.display="flex"; pw.style.alignItems="center"; pw.style.gap="10px";
+pw.innerHTML='<span class="lbl">じぶんの パート</span>'+
+  '<div class="seg" id="part"><button data-p="nagado" aria-pressed="true">ながどうだいこ</button>'+
+  '<button data-p="shime" aria-pressed="false">しめだいこ</button></div>';
+pw.hidden=true;
+var ctrl=$("go").parentNode;
+ctrl.insertBefore(pw, ctrl.firstElementChild);
+pw.querySelector("#part").addEventListener("click",function(e){
+  var b=e.target.closest("button"); if(!b) return;
+  stop(); part=b.getAttribute("data-p");
+  var bs=this.querySelectorAll("button");
+  for(var i=0;i<bs.length;i++) bs[i].setAttribute("aria-pressed", bs[i]===b?"true":"false");
+  drawBeats();
+});
+var _open=openLesson;
+openLesson=function(k){ _open(k); pw.hidden = (k!=="song"); };
+
+show("menu");
+})();
+</script>
+
+</body></html>
